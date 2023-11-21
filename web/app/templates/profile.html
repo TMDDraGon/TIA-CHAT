@@ -1,0 +1,113 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .column {
+            float: left;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .left {
+            width: 20%;
+        }
+        
+        .right {
+            width: 80%;
+        }
+        
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        
+        .popup.visible {
+            display: block;
+        }
+    </style>
+</head>
+{% extends "base.html" %} {% block content %}
+<div class="box">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="has-text-left">
+                    <div class="" style="padding-right:20px">
+                        <img src="{{ current_user.avatar_url }}" style="  width: 200px;border-radius: 50%;object-fit: cover;">
+
+                        <button type=button onClick="location.href='/changeprofile'" class="btn btn-primary">Edit infomation</button>
+                        <div class="popup">
+                            <img id="target" width="400" /><br>
+                            <form method="POST" action="editmage" enctype="multipart/form-data">
+                                <input type="file" id="select_image" name="image" onchange="putImage()" accept="image/*" /><br>
+                                <button class="btn btn-primary">Summit</button>
+                            </form>
+                            <button class="close-button btn btn-primary">Close</button>
+                        </div>
+                        <button class="btn btn-primary" id="button">Edit Profile</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <p class="framed">{{current_user.name}}</p>
+                    <p class="framed">{{current_user.email}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var popup = document.querySelector('.popup');
+    var button = document.querySelector('#button');
+    var box = document.querySelector(".box");
+    var closeButton = document.querySelector('.close-button');
+
+    button.addEventListener('click', function() {
+        popup.classList.toggle('visible');
+        box.classList.toggle('invisible');
+    });
+
+    closeButton.addEventListener('click', function() {
+        popup.classList.remove('visible');
+        box.classList.remove('invisible');
+
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!popup.contains(event.target) && !button.contains(event.target)) {
+            popup.classList.remove('visible');
+        }
+    });
+
+    function showImage(src, target) {
+        var fr = new FileReader();
+
+        fr.onload = function() {
+            target.src = fr.result;
+        }
+        fr.readAsDataURL(src.files[0]);
+
+    }
+
+    function putImage() {
+        var src = document.getElementById("select_image");
+        var target = document.getElementById("target");
+        showImage(src, target);
+    }
+</script>
+{% endblock %}

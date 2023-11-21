@@ -1,0 +1,16 @@
+div.box {
+    position: relative;
+    top: -350px;
+    right: -550px;
+}
+
+button.btn.btn-primary {
+    position: relative;
+    left: 50px;
+}
+
+.title {
+    color: #fff;
+    position: relative;
+    left: 50px;
+}

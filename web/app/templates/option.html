@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+<div class="box">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="notification is-danger" style="font-size: 24px; color:rgb(235, 25, 25)">
+        {{ messages[0] }}
+    </div>
+    {% endif %} {% endwith %}
+    <div class="Join">
+        <i class="bi bi-dice-6-fill"></i>
+        <a href='{{ url_for("random_room") }}' class="join">Let's Join to random room!</a>
+    </div>
+    <div class="Create">
+        <i class="bi bi-tools"></i>
+        <a href='{{  url_for("create_room") }}' class="create">Create your own room!</a>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"> {% endblock %}
